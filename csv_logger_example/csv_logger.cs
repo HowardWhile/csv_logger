@@ -53,7 +53,7 @@ namespace AIM.Modules
         public csv_logger(
             string i_filename,
             RollingInterval i_rollingInterval = RollingInterval.Infinite,
-            int i_retainedFileCountLimit = 3 // 保留多少檔案
+            int i_retainedFileCountLimit = 10 // 
             )
         {
             //this.filename = i_filename;
@@ -105,7 +105,9 @@ namespace AIM.Modules
 
         public void WriteRecords(List<dynamic> iRecords)
         {
-            string path = $"{this.file_path}\\{this.file_name}-{System.DateTime.Now.ToString(this.filenames_appended)}{this.file_ext}";
+            string path = this.rollingInterval == RollingInterval.Infinite ?
+                $"{this.file_path}\\{this.file_name}{this.file_ext}":
+                $"{this.file_path}\\{this.file_name}-{System.DateTime.Now.ToString(this.filenames_appended)}{this.file_ext}";
 
             bool file_exists = File.Exists(path);
             if (!file_exists)

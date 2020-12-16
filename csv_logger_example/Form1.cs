@@ -20,26 +20,22 @@ namespace csv_logger_example
             InitializeComponent();
         }
         csv_logger csv_log = new csv_logger("log.csv", csv_logger.RollingInterval.Minute);
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var records = new List<dynamic>();
-            dynamic record = new ExpandoObject();
-            record.Id = 1;
-            record.Name = "one";
-            records.Add(record);
 
-            csv_log.WriteRecord(records);
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.backgroundWorker1.RunWorkerAsync();
-            this.backgroundWorker2.RunWorkerAsync();
-            this.backgroundWorker3.RunWorkerAsync();
+            //this.backgroundWorker1.RunWorkerAsync();
+            //this.backgroundWorker2.RunWorkerAsync();
+            //this.backgroundWorker3.RunWorkerAsync();
         }
         csv_logger bg1_csv = new csv_logger(@".\logs\bg1_log.csv", i_rollingInterval: csv_logger.RollingInterval.Minute);
         csv_logger bg2_csv = new csv_logger(@".\logs\bg2_log.csv", i_rollingInterval: csv_logger.RollingInterval.Minute);
         csv_logger bg3_csv = new csv_logger(@".\logs\bg3_log.csv", i_rollingInterval: csv_logger.RollingInterval.Minute);
+
+        csv_logger rolling_log = new csv_logger(
+            @".\logs\rolling_log.csv",
+            i_rollingInterval: csv_logger.RollingInterval.Minute,
+            i_retainedFileCountLimit: 5);
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -99,6 +95,48 @@ namespace csv_logger_example
 
                 count++;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            csv_logger clog = new csv_logger(@".\logs\log.csv");
+
+            dynamic record = new ExpandoObject();
+            record.Id = 1;
+            record.Name = "one";
+            clog.WriteRecord(record);
+
+            record.Id = 2;
+            record.Name = "two";
+            clog.WriteRecord(record);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            csv_logger clog = new csv_logger(@".\logs\log.csv");
+
+            List<dynamic> records = new List<dynamic>();
+            for (int id = 0; id < 10; id++)
+            {
+                dynamic record = new ExpandoObject();
+                record.Id = id;
+                record.Name = id * id;
+                records.Add(record);
+            }
+
+            clog.WriteRecords(records);
+        }
+
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Random rand = new Random();
+
+            dynamic record = new ExpandoObject();
+            record.time = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            record.rand = rand.NextDouble();
+
+            this.rolling_log.WriteRecord(record);
         }
     }
 }
