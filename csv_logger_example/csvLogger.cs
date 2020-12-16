@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AIM.Modules
 {   
-    class csv_logger
+    class csvLogger
     {
         public enum RollingInterval
         {
@@ -50,7 +50,7 @@ namespace AIM.Modules
             Minute = 5
         }
 
-        public csv_logger(
+        public csvLogger(
             string i_filename,
             RollingInterval i_rollingInterval = RollingInterval.Infinite,
             int i_retainedFileCountLimit = 10 // 
@@ -77,10 +77,10 @@ namespace AIM.Modules
                     this.filenames_appended = "yyyy";
                     break;
                 case RollingInterval.Month:
-                    this.filenames_appended = "yyyyMMdd";
+                    this.filenames_appended = "yyyyMM";
                     break;
                 case RollingInterval.Day:
-                    this.filenames_appended = "yyyyMMddHHmm";
+                    this.filenames_appended = "yyyyMMdd";
                     break;
                 case RollingInterval.Hour:
                     this.filenames_appended = "yyyyMMddHH";

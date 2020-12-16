@@ -1,6 +1,6 @@
 
 
-# csv_logger.cs
+# csvLogger.cs
 
 ## Install
 
@@ -17,7 +17,7 @@ https://www.nuget.org/packages/CsvHelper/
 write data line
 
 ```c#
-csv_logger clog = new csv_logger(@".\logs\log.csv");
+csvLogger clog = new csvLogger(@".\logs\log.csv");
 ```
 
 
@@ -57,7 +57,7 @@ clog.WriteRecords(records);
 ---
 
 ```c#
-csv_logger rolling_log = new csv_logger(
+csvLogger rolling_log = new csvLogger(
     @".\logs\rolling_log.csv",
     i_rollingInterval: csv_logger.RollingInterval.Minute,
     i_retainedFileCountLimit: 5);
