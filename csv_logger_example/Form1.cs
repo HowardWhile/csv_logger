@@ -19,7 +19,7 @@ namespace csv_logger_example
         {
             InitializeComponent();
         }
-        csv_logger csv_log = new csv_logger("log.csv", csv_logger.RollingInterval.Minute);
+        csvLogger csv_log = new csvLogger("log.csv", csvLogger.RollingInterval.Minute);
 
 
         private void Form1_Load(object sender, EventArgs e)
@@ -28,13 +28,13 @@ namespace csv_logger_example
             //this.backgroundWorker2.RunWorkerAsync();
             //this.backgroundWorker3.RunWorkerAsync();
         }
-        csv_logger bg1_csv = new csv_logger(@".\logs\bg1_log.csv", i_rollingInterval: csv_logger.RollingInterval.Minute);
-        csv_logger bg2_csv = new csv_logger(@".\logs\bg2_log.csv", i_rollingInterval: csv_logger.RollingInterval.Minute);
-        csv_logger bg3_csv = new csv_logger(@".\logs\bg3_log.csv", i_rollingInterval: csv_logger.RollingInterval.Minute);
+        csvLogger bg1_csv = new csvLogger(@".\logs\bg1_log.csv", i_rollingInterval: csvLogger.RollingInterval.Minute);
+        csvLogger bg2_csv = new csvLogger(@".\logs\bg2_log.csv", i_rollingInterval: csvLogger.RollingInterval.Minute);
+        csvLogger bg3_csv = new csvLogger(@".\logs\bg3_log.csv", i_rollingInterval: csvLogger.RollingInterval.Minute);
 
-        csv_logger rolling_log = new csv_logger(
+        csvLogger rolling_log = new csvLogger(
             @".\logs\rolling_log.csv",
-            i_rollingInterval: csv_logger.RollingInterval.Minute,
+            i_rollingInterval: csvLogger.RollingInterval.Minute,
             i_retainedFileCountLimit: 5);
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -99,7 +99,7 @@ namespace csv_logger_example
 
         private void button1_Click(object sender, EventArgs e)
         {
-            csv_logger clog = new csv_logger(@".\logs\log.csv");
+            csvLogger clog = new csvLogger(@".\logs\log.csv");
 
             dynamic record = new ExpandoObject();
             record.Id = 1;
@@ -113,7 +113,7 @@ namespace csv_logger_example
 
         private void button2_Click(object sender, EventArgs e)
         {
-            csv_logger clog = new csv_logger(@".\logs\log.csv");
+            csvLogger clog = new csvLogger(@".\logs\log.csv");
 
             List<dynamic> records = new List<dynamic>();
             for (int id = 0; id < 10; id++)
@@ -129,6 +129,17 @@ namespace csv_logger_example
 
 
         private void timer1_Tick(object sender, EventArgs e)
+        {
+            Random rand = new Random();
+
+            dynamic record = new ExpandoObject();
+            record.time = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            record.rand = rand.NextDouble();
+
+            this.rolling_log.WriteRecord(record);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
         {
             Random rand = new Random();
 
